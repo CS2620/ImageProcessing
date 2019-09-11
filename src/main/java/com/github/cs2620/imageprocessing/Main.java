@@ -56,14 +56,16 @@ public class Main {
             
             switch(mod){
                 case "toRed":
-                    image.all(Pixel::toRed);
+                    image.all(Pixel::toGrayscaleRed);
                     break;
                 case "toGreen":
-                    image.all(Pixel::toGreen);
+                    image.all(Pixel::toGrayscaleGreen);
                     break;
                 case "toBlue":
-                    image.all(Pixel::toBlue);
+                    image.all(Pixel::toGrayscaleBlue);
                     break;
+                case "histogram":
+                    image = image.getGrayscaleHistogramImage();
                 case "none":
                     break;
                 default:

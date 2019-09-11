@@ -12,8 +12,13 @@ public class Pixel {
 
     private int r, g, b;
     
-    public Pixel(int i){
-        
+    public Pixel(int r, int g, int b){
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+    
+    public Pixel(int i){  
         
         
         
@@ -29,9 +34,10 @@ public class Pixel {
     
     
 
-    public void toGrayscale() {
+    public Pixel toGrayscale() {
         int gray = (r + g + b) / 3;
         grayscale(gray);
+        return this;
 
     }
     
@@ -83,15 +89,15 @@ public class Pixel {
         
     }
 
-    public void toRed() {
+    public void toGrayscaleRed() {
         grayscale(r);
     }
 
-    public void toGreen() {
+    public void toGrayscaleGreen() {
         grayscale(g);
     }
 
-    public void toBlue() {
+    public void toGrayscaleBlue() {
         grayscale(b);
     }
 
@@ -103,6 +109,44 @@ public class Pixel {
 
     public Color getColor() {
         return new Color(r, g, b);
+    }
+    
+    public int getRed(){
+        return r;
+    }
+    
+    public int getGreen(){
+        return g;
+    }
+    
+    public int getBlue(){
+        return b;
+    }
+    
+    private float[] getHSB(){
+        float[] hsb = new float[3];
+        Color.RGBtoHSB(r, g, b, hsb);
+        return hsb;
+    }
+    
+    public float getHue(){
+        float[] hsb = getHSB();
+        return hsb[0];
+    }
+    
+    public float getSaturation(){
+        float[] hsb = getHSB();
+        return hsb[1];
+    }
+    
+    public float getValue(){
+        float[] hsb = getHSB();
+        return hsb[2];
+    }
+    
+    public int getRGB(){
+        int toReturn = (r << 16) + (g << 8) + b;
+        return toReturn;
     }
 
 }
