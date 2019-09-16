@@ -32,8 +32,8 @@ public class MyImage {
             Logger.getLogger(MyImage.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public MyImage(int w, int h){
+
+    public MyImage(int w, int h) {
         bufferedImage = new BufferedImage(w, h, BufferedImage.TYPE_4BYTE_ABGR);
     }
 
@@ -75,18 +75,17 @@ public class MyImage {
     }
 
     public InputStream getInputStream() throws IOException {
-        
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", os);
-            InputStream is = new ByteArrayInputStream(os.toByteArray());
-            return is;
-        
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", os);
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
+        return is;
+
     }
-    
-    public int[] getGrayscaleHistogram(){
+
+    public int[] getGrayscaleHistogram() {
         int[] histogram = new int[256];
-        
-        
+
         //Bin each pixel in the histogram
         for (int y = 0; y < bufferedImage.getHeight(); y++) {
             for (int x = 0; x < bufferedImage.getWidth(); x++) {
@@ -96,48 +95,155 @@ public class MyImage {
 
                 int grayscale = (int) (p.getValue() * 255);
                 histogram[grayscale]++;
-               
 
             }
         }
-        
-        
-        
+
         return histogram;
     }
-    
-    public MyImage getGrayscaleHistogramImage(){
+
+    public MyImage getGrayscaleHistogramImage() {
         int[] histogram = getGrayscaleHistogram();
         //Find the biggest bin
         int max = 0;
-        for(int h = 0; h < 256; h++){
-            if(histogram[h] > max){
+        for (int h = 0; h < 256; h++) {
+            if (histogram[h] > max) {
                 max = histogram[h];
             }
         }
-        
+
         System.out.println("The biggest histogram value is " + max);
-        
+
         MyImage toReturn = new MyImage(256, 50);
-        
-        
+
         //Go across and create the histogram
-        for(int x = 0; x < 256; x++){
-            int localMax = histogram[x]*50/max;
-            for(int y = 0; y < 50; y++){
-                int localY = 50-y;
-                
-                if(localY < localMax)
-                    toReturn.bufferedImage.setRGB(x, y, new Pixel(x, x,x).getColor().getRGB());
-                else
-                    toReturn.bufferedImage.setRGB(x, y, Color.BLACK.getRGB());
-            
+        for (int x = 0; x < 256; x++) {
+            int localMax = histogram[x] * 50 / max;
+            for (int y = 0; y < 50; y++) {
+                int localY = 50 - y;
+
+                if (histogram[x] == 0) {
+                    toReturn.bufferedImage.setRGB(x, y, Color.RED.getRGB());
+                } else {
+
+                    if (localY < localMax) {
+                        toReturn.bufferedImage.setRGB(x, y, new Pixel(x, x, x).getColor().getRGB());
+                    } else {
+                        toReturn.bufferedImage.setRGB(x, y, new Pixel((x + 128) % 255, (x + 128) % 255, (x + 128) % 255).getRGB());
+                    }
+                }
+
             }
         }
-        
+
         return toReturn;
+
+    }
+
+    public void simpleAdjustForExposure() {
+
+        int[] histogram = getGrayscaleHistogram();
+        int firstIndexWithValue = 255;
+        int lastIndexWithValue = 0;
+        for (int i = 0; i < 256; i++) {
+            if (histogram[i] != 0) {
+                if (i > lastIndexWithValue) {
+                    lastIndexWithValue = i;
+                }
+                if (i < firstIndexWithValue) {
+                    firstIndexWithValue = i;
+                }
+            }
+        }
+
+        System.out.println("The first histogram bin with a non-zero value is: " + firstIndexWithValue);
+        System.out.println("The last histogram bin with a non-zero value is: " + lastIndexWithValue);
+
+        //Now stretch the pixels to fill the whole image.
+        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+            for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                int color_int = bufferedImage.getRGB(x, y);
+
+                Pixel p = new Pixel(color_int);
+
+                int grayscale = (int) (p.getValue() * 255);
+                float newGrayscale = (grayscale - firstIndexWithValue) / (float) (lastIndexWithValue - firstIndexWithValue);
+                p.setValue(newGrayscale);
+
+                bufferedImage.setRGB(x, y, p.getColor().getRGB());
+
+            }
+        }
+
+        histogram = getGrayscaleHistogram();
+        firstIndexWithValue = 255;
+        lastIndexWithValue = 0;
+        for (int i = 0; i < 256; i++) {
+            if (histogram[i] != 0) {
+                if (i > lastIndexWithValue) {
+                    lastIndexWithValue = i;
+                }
+                if (i < firstIndexWithValue) {
+                    firstIndexWithValue = i;
+                }
+            }
+        }
+
+        System.out.println("After adjusting for exposure, the first histogram bin with a non-zero value is: " + firstIndexWithValue);
+        System.out.println("After adjusting for exposure, the last histogram bin with a non-zero value is: " + lastIndexWithValue);
+
+    }
+    
+    
+    public void autoAdjustForExposure() {
+
+        int[] histogram = getGrayscaleHistogram();
+        int pixelSum = 0;
+        
+         for (int i = 0; i < 256; i++) {
+            pixelSum += histogram[i];
+        }
+
+        System.out.println("There are a total of : " + pixelSum + " pixels in the image");
+        
+        float perfectPixelsPerBin = pixelSum / 256;
+        
+        System.out.println("Ideally, we'd have " + perfectPixelsPerBin + " pixels per value.");
+        
+        int[] histogramMap = new int[256]; //Store the new value for each value
+        
+        int sum = 0;
+        int currentStep = 0;
+        int currentBin = 0;
         
         
+        while(currentBin <256){
+            histogramMap[currentBin] = currentStep;
+            sum += histogram[currentBin];
+            currentBin++;
+            currentStep = (int)Math.floor(sum/perfectPixelsPerBin);
+            //sum += histogram[i];
+            //histogramMap[i] = (int)(sum / perfectPixelsPerBin);
+        }
+        
+        //Now stretch the pixels to fill the whole image.
+        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+            for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                int color_int = bufferedImage.getRGB(x, y);
+
+                Pixel p = new Pixel(color_int);
+
+                int grayscale = (int) (p.getValue() * 255);
+                float newGrayscale = histogramMap[grayscale]/256.0f;
+                p.setValue(newGrayscale);
+
+                bufferedImage.setRGB(x, y, p.getColor().getRGB());
+
+            }
+        }
+
+       
+
     }
 
 }
