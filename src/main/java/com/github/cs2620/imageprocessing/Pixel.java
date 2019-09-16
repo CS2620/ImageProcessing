@@ -16,6 +16,8 @@ public class Pixel {
         this.r = r;
         this.g = g;
         this.b = b;
+        
+        clip();
     }
     
     public Pixel(int i){  
@@ -29,6 +31,19 @@ public class Pixel {
         this.r = r;
         this.g = g;
         this.b = b;
+    }
+    
+    private void clip(){
+        if(this.r > 255) this.r = 255;
+        if(this.g > 255) this.g = 255;
+        if(this.b > 255) this.b = 255;
+        
+        
+        if(this.r < 0) this.r = 0;
+        if(this.g < 0) this.g = 0;
+        if(this.b < 0) this.b = 0;
+        
+        
     }
 
     
@@ -51,6 +66,29 @@ public class Pixel {
         float v = hsb[2];
         
         s = .5f;
+        
+        int i = Color.HSBtoRGB(h, s, v);
+        
+        int r = (i >> 16) & 0xff;
+        int g = (i >> 8) & 0xff;
+        int b = i & 0xff;
+        
+        this.r = r;
+        this.g = g;
+        this.b = b;
+        
+        
+    }
+    
+    public void setValue(float value){
+        
+        float[] hsb = new float[3];
+        Color.RGBtoHSB(r, g, b, hsb);
+        
+        float h = hsb[0];//All values 0-1
+        float s = hsb[1];
+        float v = value;
+        
         
         int i = Color.HSBtoRGB(h, s, v);
         
@@ -145,7 +183,8 @@ public class Pixel {
     }
     
     public int getRGB(){
-        int toReturn = (r << 16) + (g << 8) + b;
+        int toReturn = ((0xff) << 24) + (r << 16) + (g << 8) + b;
+        
         return toReturn;
     }
 
