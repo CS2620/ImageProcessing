@@ -197,53 +197,6 @@ public class MyImage {
     
     public void autoAdjustForExposure() {
 
-        int[] histogram = getGrayscaleHistogram();
-        int pixelSum = 0;
-        
-         for (int i = 0; i < 256; i++) {
-            pixelSum += histogram[i];
-        }
-
-        System.out.println("There are a total of : " + pixelSum + " pixels in the image");
-        
-        float perfectPixelsPerBin = pixelSum / 256;
-        
-        System.out.println("Ideally, we'd have " + perfectPixelsPerBin + " pixels per value.");
-        
-        int[] histogramMap = new int[256]; //Store the new value for each value
-        
-        int sum = 0;
-        int currentStep = 0;
-        int currentBin = 0;
-        
-        
-        while(currentBin <256){
-            histogramMap[currentBin] = currentStep;
-            sum += histogram[currentBin];
-            currentBin++;
-            currentStep = (int)Math.floor(sum/perfectPixelsPerBin);
-            //sum += histogram[i];
-            //histogramMap[i] = (int)(sum / perfectPixelsPerBin);
-        }
-        
-        //Now stretch the pixels to fill the whole image.
-        for (int y = 0; y < bufferedImage.getHeight(); y++) {
-            for (int x = 0; x < bufferedImage.getWidth(); x++) {
-                int color_int = bufferedImage.getRGB(x, y);
-
-                Pixel p = new Pixel(color_int);
-
-                int grayscale = (int) (p.getValue() * 255);
-                float newGrayscale = histogramMap[grayscale]/256.0f;
-                p.setValue(newGrayscale);
-
-                bufferedImage.setRGB(x, y, p.getColor().getRGB());
-
-            }
-        }
-
-       
-
     }
 
 }
