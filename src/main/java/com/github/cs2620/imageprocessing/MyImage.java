@@ -196,6 +196,55 @@ public class MyImage {
     
     
     public void autoAdjustForExposure() {
+        
+        int numPixels = bufferedImage.getWidth() * bufferedImage.getHeight();
+        float idealPixels = numPixels/256.0f;
+        int[] currentHistogram = getGrayscaleHistogram();
+        
+        int[] finalHistogram = new int[256];
+        int[] map = new int[256];
+        int finalIndex = 0;
+        float currentOverflow = 0;
+        
+        for(int i = 0; i < 256; i++){
+            
+            int finalSize = finalHistogram[finalIndex];
+            int currentValues = currentHistogram[i];
+            int newFinalSize = finalSize + currentValues;
+            
+            if(newFinalSize < idealPixels)
+            {
+                finalHistogram[finalIndex] = newFinalSize;
+                map[i] = finalIndex;
+            }
+            else{
+                finalHistogram[finalIndex] = newFinalSize;
+                map[i] = finalIndex;
+                currentOverflow += (finalHistogram[finalIndex] - idealPixels);
+                finalIndex++;
+                while(currentOverflow > idealPixels){
+                    finalIndex++;
+                    currentOverflow -= idealPixels;
+                }
+                
+            }
+        }
+        
+        for (int y = 0; y < bufferedImage.getHeight(); y++) {
+            for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                int color_int = bufferedImage.getRGB(x, y);
+
+                Pixel p = new Pixel(color_int);
+
+                int grayscale = (int) (p.getValue() * 255);
+                float newGrayscale = map[grayscale]/256.0f;
+                p.setValue(newGrayscale);
+
+                bufferedImage.setRGB(x, y, p.getColor().getRGB());
+
+            }
+        }
+        
 
     }
 
