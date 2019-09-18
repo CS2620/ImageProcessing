@@ -1,25 +1,68 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!doctype html>
 <html>
-    <head>
-        <title>Image Processing</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>This is a butterfly</div>
-        <img src="./img/lowContrast.jpg/none">
-        <img src="./img/lowContrast.jpg/simpleAdjustForExposure">
-        <div>
-        <img src="./img/lowContrast.jpg/histogram">
-        <img src="./img/lowContrast.jpg/simpleAdjustForExposure:histogram">
-        </div>
-        
-        
-        
-    </body>
+
+<head>
+  <title>Image Processing</title>
+   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <div id='app'>
+      <v-app>
+          <v-content>
+            <v-container>
+              <v-layout>
+                <v-flex>
+                  <v-card>
+                    <v-card-title>
+                      Choose an example
+                    </v-card-title>
+                      <v-card-text>
+                          <v-btn v-for="row in rows" :key="row" @click="src=row">
+                              {{row}}
+                          </v-btn>
+                      </v-card-text>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          <iframe :src="src" width="100%" height="100%"></iframe>
+          </v-content>
+        </v-app>
+   
+  </div>
+
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://unpkg.com/vue'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  
+
+  <script>
+
+    var app = new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data: {
+          src:"",
+        rows: [
+            "hiddenPicture.html",
+            "autoContrastMedical.html"
+        ],
+      },
+      methods: {
+       
+      },
+    });
+
+   
+
+   
+
+  </script>
+
+</body>
+
 </html>

@@ -51,7 +51,7 @@ public class Main {
 
                 switch (thisMod) {
                     case "toRed":
-                        image.all(Pixel::toGrayscaleRed);
+                        image.all(p->p.toGrayscaleRed());
                         break;
                     case "toGreen":
                         image.all(Pixel::toGrayscaleGreen);
