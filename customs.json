@@ -1,0 +1,14 @@
+{
+    "elements": {
+        "v-card": {},
+        "v-card-text": {},
+        "v-content": {},
+        "v-row": {},
+        "v-img": {},
+        "v-col": {},
+        "v-app": {},
+        "v-container": {},
+        "v-card-title": {}
+    },
+    "attributes": {}
+}

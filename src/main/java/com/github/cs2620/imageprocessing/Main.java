@@ -23,6 +23,17 @@ public class Main {
             config.addStaticFiles("./static", Location.EXTERNAL);
             config.addStaticFiles("./images", Location.EXTERNAL);
         }).start(7000);
+        
+        app.get("/listThumbnails", ctx->{
+           Stream<Path> paths = Files.list(Paths.get("./images"));
+           
+           String toReturn = String.join("\n", paths.map(p->p.getFileName().toString()).toArray(String[]::new));
+           
+           ctx.result(toReturn);
+           
+           
+
+        });
 
         app.get("/img/:name/:modString", ctx -> {
 
@@ -50,6 +61,11 @@ public class Main {
                 String thisMod = mods[i];
 
                 switch (thisMod) {
+                    case "toGray":
+                    case "toGrey":
+                        image.all(p->p.toGrayscale());
+                        break;
+                    
                     case "toRed":
                         image.all(p->p.toGrayscaleRed());
                         break;
