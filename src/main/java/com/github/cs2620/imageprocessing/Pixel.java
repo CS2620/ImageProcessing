@@ -56,6 +56,22 @@ public class Pixel {
 
     }
     
+    public Pixel slice(int bit){
+      int gray = (r + g + b) / 3;
+        
+      int o;
+      int power = (int)(Math.pow(2,bit));
+      if((power& gray) > 0){
+        o = 255;
+      }
+      else{
+        o = 0;
+      }
+      grayscale(o);
+      return this;
+      
+    }
+    
     public void lessSaturated(){
         
         float[] hsb = new float[3];

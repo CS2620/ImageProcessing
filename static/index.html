@@ -79,6 +79,12 @@
                       <div>Adjusted Value Histogram</div>
                       <div><v-img :src="'./img/' + src + '/autoAdjustForExposure:histogram'"></div>
                       </div>
+                      <div v-if="process=='BitSlice'">
+                        <v-row>
+                        <v-col v-for="n in 8" cols='4'><v-img :src="'./img/' + src + '/slice,' + (n-1)"></v-img></v-col>
+                        </v-row>
+                      
+                      </div>
                       
                     </v-col>
                   </v-row>
@@ -111,7 +117,8 @@
             thumbNails:[],
             rows: [
                     "RGBChannels",
-                    "autoContrast"
+                    "autoContrast",
+                    "BitSlice",
             ],
           },
           mounted(){
