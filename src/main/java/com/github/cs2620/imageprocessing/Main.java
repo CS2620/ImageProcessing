@@ -94,6 +94,9 @@ public class Main {
           case "autoAdjustForExposure":
             image.autoAdjustForExposure();
             break;
+          case "kernel":
+            image.applyKernel();
+            break;
           case "none":
             break;
           default:
