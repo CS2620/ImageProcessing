@@ -36,7 +36,7 @@
                   <v-row>
                     <v-col cols="6">
                       <div class="title">Original</div>
-                      <div v-if="process!='Kernel'"><v-img :src="src"></v-img></div>
+                      <div v-if="process!='Kernel'"><v-img :src="'./img/' + src + '/toGray'"></v-img></div>
                       <div v-else><v-img :src="'./img/' + src + '/toGray'"></v-img></div>
                       <div>Value Histogram</div>
                       <div><v-img :src="'./img/' + src + '/histogram'"></div>

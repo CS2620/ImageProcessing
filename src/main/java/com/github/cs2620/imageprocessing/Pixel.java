@@ -39,9 +39,9 @@ public class Pixel {
         if(this.b > 255) this.b = 255;
         
         
-        if(this.r < 0) this.r = 0;
-        if(this.g < 0) this.g = 0;
-        if(this.b < 0) this.b = 0;
+        if(this.r < 0) this.r = -this.r;
+        if(this.g < 0) this.g = -this.g;
+        if(this.b < 0) this.b = -this.b;
         
         
     }

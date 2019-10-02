@@ -250,8 +250,21 @@ public class MyImage {
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
         kernel[y][x] = 0;
-        if (x == 1 && y == 1) {
-          kernel[y][x] = 1.0f;
+        if (x == 1 && y == 0) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 1 && y == 2) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 0 && y == 1) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 2 && y == 1) {
+          kernel[y][x] = -1.0f;
+        }
+        if(x == 1 && y == 1){
+          kernel[y][x] = 5.0f;
+            
         }
       }
     }
