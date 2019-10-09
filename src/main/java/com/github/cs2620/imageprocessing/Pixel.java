@@ -75,8 +75,8 @@ public class Pixel {
 
     }
     
-    public Pixel slice(int bit){
-      int gray = (r + g + b) / 3;
+    public int getSlice(int bit){
+       int gray = (r + g + b) / 3;
         
       int o;
       int power = (int)(Math.pow(2,bit));
@@ -86,6 +86,11 @@ public class Pixel {
       else{
         o = 0;
       }
+      return o;
+    }
+    
+    public Pixel slice(int bit){
+     int o = getSlice(bit);
       grayscale(o);
       return this;
       

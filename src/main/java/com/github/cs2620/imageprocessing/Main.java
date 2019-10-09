@@ -69,7 +69,10 @@ public class Main {
             final int intArg = Integer.parseInt(arg);
             image.all(p -> p.slice(intArg));
             break;
-
+          case "slice_rebuild":
+            int intArg2 = Integer.parseInt(arg);            
+            image.sliceRebuild(intArg2);
+            break;
           case "toGray":
           case "toGrey":
             image.all(p -> p.toGrayscale());

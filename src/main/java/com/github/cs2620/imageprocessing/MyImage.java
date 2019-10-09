@@ -262,9 +262,9 @@ public class MyImage {
         if (x == 2 && y == 1) {
           kernel[y][x] = -1.0f;
         }
-        if(x == 1 && y == 1){
+        if (x == 1 && y == 1) {
           kernel[y][x] = 4.0f;
-            
+
         }
       }
     }
@@ -272,21 +272,21 @@ public class MyImage {
     doKernel(kernel);
 
   }
-  
+
   void applyKernelBlur() {
     float[][] kernel = new float[3][3];
 
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        kernel[y][x] = 1/9.0f;
-       
+        kernel[y][x] = 1 / 9.0f;
+
       }
     }
 
     doKernel(kernel);
 
   }
-  
+
   void applyKernelSharp() {
     float[][] kernel = new float[3][3];
 
@@ -305,9 +305,9 @@ public class MyImage {
         if (x == 2 && y == 1) {
           kernel[y][x] = -1.0f;
         }
-        if(x == 1 && y == 1){
+        if (x == 1 && y == 1) {
           kernel[y][x] = 5.0f;
-            
+
         }
       }
     }
@@ -331,119 +331,139 @@ public class MyImage {
     for (int y = 0; y < bufferedImage.getHeight(); y++) {
       for (int x = 0; x < bufferedImage.getWidth(); x++) {
         float sum = 0;
-        for(int ky = -1; ky <= 1; ky++){
-          for(int kx = -1; kx <=1; kx++){
+        for (int ky = -1; ky <= 1; ky++) {
+          for (int kx = -1; kx <= 1; kx++) {
             int color_int = 0;
-            
+
             int px = x + kx;
             int py = y + ky;
-            if(px >= 0 && px < bufferedImage.getWidth()  && py >= 0 && py < bufferedImage.getHeight()){
-              color_int =  temp.getRGB(px, py);
+            if (px >= 0 && px < bufferedImage.getWidth() && py >= 0 && py < bufferedImage.getHeight()) {
+              color_int = temp.getRGB(px, py);
             }
             Pixel p = new Pixel(color_int);
             p.toGrayscale();
             float grayscale = p.getRed();
-            float kernelValue = kernel[kx+1][ky+1];
-            sum += (grayscale*kernelValue);
-            
-            
+            float kernelValue = kernel[kx + 1][ky + 1];
+            sum += (grayscale * kernelValue);
+
           }
         }
         int intSum = (int) (sum);
-        
-        bufferedImage.setRGB(x,y, new Pixel(intSum, intSum, intSum).getRGB());
+
+        bufferedImage.setRGB(x, y, new Pixel(intSum, intSum, intSum).getRGB());
       }
     }
   }
 
   void crop() {
-    BufferedImage temp = new BufferedImage(bufferedImage.getWidth()/4, bufferedImage.getHeight()/4, BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage temp = new BufferedImage(bufferedImage.getWidth() / 4, bufferedImage.getHeight() / 4, BufferedImage.TYPE_4BYTE_ABGR);
     for (int y = 0; y < temp.getHeight(); y++) {
       for (int x = 0; x < temp.getWidth(); x++) {
-        int color_int = bufferedImage.getRGB(x + bufferedImage.getWidth()/2 - bufferedImage.getWidth()/8, y+ bufferedImage.getHeight()/2 - bufferedImage.getHeight()/8);
+        int color_int = bufferedImage.getRGB(x + bufferedImage.getWidth() / 2 - bufferedImage.getWidth() / 8, y + bufferedImage.getHeight() / 2 - bufferedImage.getHeight() / 8);
 
         Pixel p = new Pixel(color_int);
         temp.setRGB(x, y, p.getColor().getRGB());
       }
     }
-    
+
     bufferedImage = temp;
   }
 
   void scaleLinear() {
-    BufferedImage temp = new BufferedImage(bufferedImage.getWidth()*4, bufferedImage.getHeight()*4, BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage temp = new BufferedImage(bufferedImage.getWidth() * 4, bufferedImage.getHeight() * 4, BufferedImage.TYPE_4BYTE_ABGR);
     for (int y = 0; y < temp.getHeight(); y++) {
       for (int x = 0; x < temp.getWidth(); x++) {
-        int color_int = bufferedImage.getRGB((int)(x/4.0f), (int)(y/4.0f));
+        int color_int = bufferedImage.getRGB((int) (x / 4.0f), (int) (y / 4.0f));
 
         Pixel p = new Pixel(color_int);
         temp.setRGB(x, y, p.getColor().getRGB());
       }
     }
-    
+
     bufferedImage = temp;
   }
 
   void scaleBilinear() {
-     BufferedImage temp = new BufferedImage(bufferedImage.getWidth()*4, bufferedImage.getHeight()*4, BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage temp = new BufferedImage(bufferedImage.getWidth() * 4, bufferedImage.getHeight() * 4, BufferedImage.TYPE_4BYTE_ABGR);
     for (int y = 0; y < temp.getHeight(); y++) {
       for (int x = 0; x < temp.getWidth(); x++) {
-        
-        
-        float landX = x/4.0f;
-        float landY = y/4.0f;
-        
-        /*int lesserX = (int)landX;
+
+        float landX = x / 4.0f;
+        float landY = y / 4.0f;
+
+        int lesserX = (int) landX;
         int greaterX = lesserX + 1;
-        int lesserY = (int)landY;
-        int greaterY = lesserY + 1;*/
-        
-        /*int[][] coordsX = new int[2][2];
+        int lesserY = (int) landY;
+        int greaterY = lesserY + 1;
+
+        int[][] coordsX = new int[2][2];
         int[][] coordsY = new int[2][2];
-        
-        coordsX[0][0] = lesserX; 
+
+        coordsX[0][0] = lesserX;
         coordsY[0][0] = lesserY;
-        
-        coordsX[0][1] = greaterX; 
+
+        coordsX[0][1] = greaterX;
         coordsY[0][1] = lesserY;
-        
-        coordsX[1][0] = lesserX; 
+
+        coordsX[1][0] = lesserX;
         coordsY[1][0] = greaterY;
-        
-        coordsX[1][1] = greaterX; 
-        coordsY[1][1] = greaterY;*/
-        
-        
-        
-       /* int[][] color_ints = new int[2][2];
-        for(int y2= 0; y2 < 2; y2++){
-          for(int x2 = 0; x2<2; x2++){
-           int getX  = coordsX[y2][x2];
-           int getY = coordsY[y2][x2];
-           
-           if(getX >= bufferedImage.getWidth()){
-             getX = bufferedImage.getWidth() - 1;
-           }
-           if(getY >= bufferedImage.getHeight()){
-             getY = bufferedImage.getHeight() - 1;
-           }
-            color_ints[y2][x2] = bufferedImage.getRGB(getX, getY);            
+
+        coordsX[1][1] = greaterX;
+        coordsY[1][1] = greaterY;
+
+        int[][] color_ints = new int[2][2];
+        for (int y2 = 0; y2 < 2; y2++) {
+          for (int x2 = 0; x2 < 2; x2++) {
+            int getX = coordsX[y2][x2];
+            int getY = coordsY[y2][x2];
+            if (getX >= bufferedImage.getWidth()) {
+              getX = bufferedImage.getWidth() - 1;
+            }
+            if (getY >= bufferedImage.getHeight()) {
+              getY = bufferedImage.getHeight() - 1;
+            }
+            color_ints[y2][x2] = bufferedImage.getRGB(getX, getY);
           }
-        }*/
-        
+        }
+
         //Now that I have my colors, calculate my final color.
-        
-        
-        
-        
-        
-        
-        
-        temp.setRGB(x, y, new Pixel(0,0,0).getColor().getRGB());
+        Pixel color_top = Pixel.interpolate(color_ints[0][0], color_ints[0][1], landX - lesserX);
+        Pixel color_bottom = Pixel.interpolate(color_ints[1][0], color_ints[1][1], landX - lesserX);
+
+        Pixel finalPixel = Pixel.interpolate(color_top, color_bottom, landY - lesserY);
+
+        temp.setRGB(x, y, finalPixel.getColor().getRGB());
       }
     }
-    
+
     bufferedImage = temp;
+  }
+
+  void sliceRebuild(int start) {
+
+    for (int y = 0; y < bufferedImage.getHeight(); y++) {
+      for (int x = 0; x < bufferedImage.getWidth(); x++) {
+
+        int color_int = bufferedImage.getRGB(x, y);
+
+        Pixel finalPixel = new Pixel(color_int);
+
+        int[] slices = new int[8];
+
+        for (int i = 0; i < 8; i++) {
+          slices[i] = finalPixel.getSlice(i);
+        }
+        int rebuild = 0;
+        for (int i = start; i < 8; i++) {
+          int toAdd = slices[i] == 255 ? 1 : 0;
+          rebuild += toAdd << (i);
+
+        }
+
+        bufferedImage.setRGB(x, y, new Pixel(rebuild, rebuild, rebuild).getColor().getRGB());
+      }
+    }
+
   }
 
 }

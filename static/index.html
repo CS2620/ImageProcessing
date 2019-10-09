@@ -110,6 +110,13 @@
                       </v-row>
 
                     </div>
+                    <div v-if="process.name=='BitSliceRebuild'">
+                      <v-row>
+                        <v-col v-for="n in 8" cols='4'>
+                          <v-img :src="'./img/' + src + '/slice_rebuild,' + (n-1) + ':simpleAdjustForExposure'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                     <div v-if="process.name=='Kernel-Blur'">
                       <v-row>
                         <v-col>
@@ -190,6 +197,9 @@
           {
             type: "bw",
             name: "BitSlice"
+          },{
+            type: "bw",
+            name: "BitSliceRebuild"
           },
           {
             type:"color",
