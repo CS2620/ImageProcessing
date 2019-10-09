@@ -58,8 +58,7 @@ public class Main {
 
         String thisMod = mods[i];
         String arg = "";
-        if(thisMod.contains(","))
-        {
+        if (thisMod.contains(",")) {
           String[] splits = thisMod.split(",");
           thisMod = splits[0];
           arg = splits[1];
@@ -70,7 +69,7 @@ public class Main {
             final int intArg = Integer.parseInt(arg);
             image.all(p -> p.slice(intArg));
             break;
-          
+
           case "toGray":
           case "toGrey":
             image.all(p -> p.toGrayscale());
@@ -102,6 +101,17 @@ public class Main {
             break;
           case "kernel-sharp":
             image.applyKernelSharp();
+            break;
+          case "crop":
+            image.crop();
+            break;
+          case "crop_scaleLinear":
+            image.crop();
+            image.scaleLinear();
+            break;
+          case "crop_scaleBilinear":
+            image.crop();
+            image.scaleBilinear();
             break;
           case "none":
             break;

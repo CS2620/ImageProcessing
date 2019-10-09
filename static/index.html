@@ -1,197 +1,257 @@
 <!doctype html>
 <html>
 
-  <head>
-    <title>Image Processing</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  </head>
+<head>
+  <title>Image Processing</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
 
-  <body>
-    <div id='app'>
-      <v-app>
-        <v-content>
-          <v-container>
+<body>
+  <div id='app'>
+    <v-app>
+      <v-content>
+        <v-container>
 
-            <v-row>
-              <v-col cols="12" >
-                <v-card>
-                  <v-card-title>
-                    Choose an thumbnail
-                  </v-card-title>
-                  <v-card-text>
-                    <v-row>
-                      <v-col v-for="thumbnail in thumbNails" :key="thumbnail" >
-                        <v-img :src="thumbnail" width="100px" height="100px" @click="src=thumbnail"></v-img>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-            <v-row v-if='src!=""'>
-              <v-col cols="12">
-                <v-card class="pa-2">
+          <v-row>
+            <v-col cols="12">
+              <v-card>
+                <v-card-title>
+                  Choose an thumbnail
+                </v-card-title>
+                <v-card-text>
                   <v-row>
-                    <v-col cols="6">
-                      <div class="title">Original</div>
-                       <div ><v-img :src="'./img/' + src + (process.type == 'bw' ? '/toGray' : '/none')"></v-img></div>
-                      <div>Value Histogram</div>
-                      <div><v-img :src="'./img/' + src + '/histogram'"></div>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-menu
-                        transition="slide-y-transition"
-                        bottom
-                        >
-                        <template v-slot:activator="{ on }">
-                          <v-btn
-                            class="purple"
-                            color="primary"
-                            dark
-                            v-on="on"
-                            >
-                            {{!process.name ? "Choose:" : process.name}}
-                          </v-btn>
-                        </template>
-                        <v-list>
-                          <div v-for="(row, i) in rows"
-                            :key="i">
-                            <div v-if="row.title">
-                            <v-subheader inset>{{row.title}}</v-subheader>
-                            <v-divider inset></v-divider>
-                            </div>
-                          <v-list-item
-                            
-                            @click="updateProcess(row)"
-                            >
-                            <v-list-item-title>{{ row.name }}</v-list-item-title>
-                          </v-list-item>
-                            
-                          </div>
-                        </v-list>
-                      </v-menu>
-                      <div v-if="process.name=='RGBChannels'">
-                        <v-row>
-                          <v-col cols="6"><div>Value Channel</div><div><v-img :src="'./img/' + src + '/toGray'"></div></v-col>
-                          <v-col cols="6"><div>Red Channel</div><div><v-img :src="'./img/' + src + '/toRed'"></div></v-col>
-
-                          <v-col cols="6"><div>Green Channel</div><div><v-img :src="'./img/' + src + '/toGreen'"></div></v-col>
-                          <v-col cols="6"><div>Blue Channel</div><div><v-img :src="'./img/' + src + '/toBlue'"></div></v-col>
-                        </v-row>
-                      </div>
-                      <div v-if="process.name=='AutoContrast'">
-                        <div><v-img :src="'./img/' + src + '/autoAdjustForExposure'"></v-img></div>
-                        <div>Adjusted Value Histogram</div>
-                        <div><v-img :src="'./img/' + src + '/autoAdjustForExposure:histogram'"></div>
-                      </div>
-                      <div v-if="process.name=='BitSlice'">
-                        <v-row>
-                          <v-col v-for="n in 8" cols='4'><v-img :src="'./img/' + src + '/slice,' + (n-1)"></v-img></v-col>
-                        </v-row>
-
-                      </div>
-                      <div v-if="process.name=='Kernel-Blur'">
-                        <v-row>
-                          <v-col ><v-img :src="'./img/' + src + '/kernel-blur'"></v-img></v-col>
-                        </v-row>
-                      </div>
-                      <div v-if="process.name=='Kernel-Edge'">
-                        <v-row>
-                          <v-col ><v-img :src="'./img/' + src + '/kernel-edge'"></v-img></v-col>
-                        </v-row>
-                      </div>
-                      <div v-if="process.name=='Kernel-Sharp'">
-                        <v-row>
-                          <v-col ><v-img :src="'./img/' + src + '/kernel-sharp'"></v-img></v-col>
-                        </v-row>
-                      </div>
+                    <v-col v-for="thumbnail in thumbNails" :key="thumbnail">
+                      <v-img :src="thumbnail" width="100px" height="100px" @click="src=thumbnail"></v-img>
                     </v-col>
                   </v-row>
-                </v-card>
-              </v-col>
-            </v-row>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row v-if='src!=""'>
+            <v-col cols="12">
+              <v-card class="pa-2">
+                <v-row>
+                  <v-col cols="6">
+                    <div class="title">Original</div>
+                    <div>
+                      <v-img :src="'./img/' + src + (process.type == 'bw' ? '/toGray' : '/none')"></v-img>
+                    </div>
+                    <div>Value Histogram</div>
+                    <div>
+                      <v-img :src="'./img/' + src + '/histogram'">
+                    </div>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-menu transition="slide-y-transition" bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn class="purple" color="primary" dark v-on="on">
+                          {{!process.name ? "Choose:" : process.name}}
+                        </v-btn>
+                      </template>
+                      <v-list>
+                        <div v-for="(row, i) in rows" :key="i">
+                          <div v-if="row.title">
+                            <v-subheader inset>{{row.title}}</v-subheader>
+                            <v-divider inset></v-divider>
+                          </div>
+                          <v-list-item @click="updateProcess(row)">
+                            <v-list-item-title>{{ row.name }}</v-list-item-title>
+                          </v-list-item>
 
-          </v-container>
-        </v-content>
-      </v-app>
+                        </div>
+                      </v-list>
+                    </v-menu>
+                    <div v-if="process.name=='RGBChannels'">
+                      <v-row>
+                        <v-col cols="6">
+                          <div>Value Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/toGray'">
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div>Red Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/toRed'">
+                          </div>
+                        </v-col>
 
-    </div>
+                        <v-col cols="6">
+                          <div>Green Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/toGreen'">
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div>Blue Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/toBlue'">
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='AutoContrast'">
+                      <div>
+                        <v-img :src="'./img/' + src + '/autoAdjustForExposure'"></v-img>
+                      </div>
+                      <div>Adjusted Value Histogram</div>
+                      <div>
+                        <v-img :src="'./img/' + src + '/autoAdjustForExposure:histogram'">
+                      </div>
+                    </div>
+                    <div v-if="process.name=='BitSlice'">
+                      <v-row>
+                        <v-col v-for="n in 8" cols='4'>
+                          <v-img :src="'./img/' + src + '/slice,' + (n-1)"></v-img>
+                        </v-col>
+                      </v-row>
 
-    <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-    <script src='https://unpkg.com/vue'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js" integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
+                    </div>
+                    <div v-if="process.name=='Kernel-Blur'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/kernel-blur'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Kernel-Edge'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/kernel-edge'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Kernel-Sharp'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/kernel-sharp'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Crop'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/crop'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Crop&ScaleLinear'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/crop_scaleLinear'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Crop&ScaleBilinear'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/crop_scaleBilinear'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+          </v-row>
+
+        </v-container>
+      </v-content>
+    </v-app>
+
+  </div>
+
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+  <script src='https://unpkg.com/vue'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
+    integrity="sha256-S1J4GVHHDMiirir9qsXWc8ZWw74PHHafpsHp5PXtjTs=" crossorigin="anonymous"></script>
 
 
-    <script>
+  <script>
 
-        var app = new Vue({
-        el: '#app',
-                vuetify: new Vuetify(),
-                data: {
-                src:"",
-                        process:{},
-                        thumbNails:[],
-                        rows: [
-                        {
-                        type: "color"
-                                , name:"RGBChannels", 
-                                title:"Image Decomposition",
-                              },
-                      {
-                        type:"bw",
-                        name:"BitSlice"
-                      },
-                        {
-                          type:"color",
-                                name:
-                                "AutoContrast",
-        title:"Auto Adjust"              
-        },
-                      {
-                        type:"bw",
-                        name:"Kernel-Sharp",
-                      },
-                      {
-                        type:"bw",
-                        name:"Kernel-Blur",
-                      },
-                      {
-                        type:"bw",
-                        name:"Kernel-Edge",
-                        title:"Image Understanding"
-                      },
-                                
-                                
-                        ],
-                },
-                mounted(){
+    var app = new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data: {
+        src: "",
+        process: {},
+        thumbNails: [],
+        rows: [
+          {
+            type: "color",
+            name: "RGBChannels",
+            title: "Image Decomposition",
+          },
+          {
+            type: "bw",
+            name: "BitSlice"
+          },
+          {
+            type:"color",
+            name:"Crop",
+            title:"Manual Adjust",
+          },
+          {
+            type:"color",
+            name:"Crop&ScaleLinear",
+            
+          },
+          {
+            type:"color",
+            name:"Crop&ScaleBilinear",
+            
+          },
+          {
+            type: "color",
+            name: "AutoContrast",
+            title: "Auto Adjust"
+          },
+          {
+            type: "bw",
+            name: "Kernel-Sharp",
+          },
+          {
+            type: "bw",
+            name: "Kernel-Blur",
+          },
+          {
+            type: "bw",
+            name: "Kernel-Edge",
+            title: "Image Understanding"
+          },
+
+
+        ],
+      },
+      mounted() {
         let that = this;
-                axios.get("/listThumbnails")
-                .then(result => {
-                that.thumbNails = result.data.split("\n");
-                })
-                .catch(error => {
-                console.log("error " + error);
-                })
-        },
-                methods: {
-                updateProcess(newValue){
-                this.process = newValue;
-                }
+        axios.get("/listThumbnails")
+          .then(result => {
+            that.thumbNails = result.data.split("\n");
+          })
+          .catch(error => {
+            console.log("error " + error);
+          })
+      },
+      methods: {
+        updateProcess(newValue) {
+          this.process = newValue;
+        }
 
-                },
-        });
-
-
+      },
+    });
 
 
 
-    </script>
 
-  </body>
+
+  </script>
+
+</body>
 
 </html>

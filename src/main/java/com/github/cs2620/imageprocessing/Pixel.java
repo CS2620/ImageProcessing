@@ -10,6 +10,25 @@ import java.awt.Color;
 
 public class Pixel {
 
+  static Pixel interpolate(int colorOne, int colorTwo, float f) {
+    Pixel one  = new Pixel(colorOne);
+    Pixel two = new Pixel(colorTwo);
+    
+    return Pixel.interpolate(one, two, f);
+  }
+
+  static Pixel interpolate(Pixel one, Pixel two, float f) {
+   //Now interpolate between the two colors based on f.
+    //If f is close to 0, we want more of colorOne. 
+    //If f is close to 1, we want more of colorTwo
+    
+    int r = (int) (one.r * (1 - f) + two.r * f);
+    int g = (int) (one.g * (1 - f) + two.g * f);
+    int b = (int) (one.b * (1 - f) + two.b * f);
+    
+    return new Pixel(r, g, b);
+  }
+
     private int r, g, b;
     
     public Pixel(int r, int g, int b){
