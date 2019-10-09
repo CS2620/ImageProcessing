@@ -244,7 +244,50 @@ public class MyImage {
 
   }
 
-  void applyKernel() {
+  void applyKernelEdge() {
+    float[][] kernel = new float[3][3];
+
+    for (int y = 0; y < 3; y++) {
+      for (int x = 0; x < 3; x++) {
+        kernel[y][x] = 0;
+        if (x == 1 && y == 0) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 1 && y == 2) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 0 && y == 1) {
+          kernel[y][x] = -1.0f;
+        }
+        if (x == 2 && y == 1) {
+          kernel[y][x] = -1.0f;
+        }
+        if(x == 1 && y == 1){
+          kernel[y][x] = 4.0f;
+            
+        }
+      }
+    }
+
+    doKernel(kernel);
+
+  }
+  
+  void applyKernelBlur() {
+    float[][] kernel = new float[3][3];
+
+    for (int y = 0; y < 3; y++) {
+      for (int x = 0; x < 3; x++) {
+        kernel[y][x] = 1/9.0f;
+       
+      }
+    }
+
+    doKernel(kernel);
+
+  }
+  
+  void applyKernelSharp() {
     float[][] kernel = new float[3][3];
 
     for (int y = 0; y < 3; y++) {
@@ -269,6 +312,11 @@ public class MyImage {
       }
     }
 
+    doKernel(kernel);
+
+  }
+
+  private void doKernel(float[][] kernel) {
     BufferedImage temp = BufferedImageCloner.clone(bufferedImage);
     for (int y = 0; y < temp.getHeight(); y++) {
       for (int x = 0; x < temp.getWidth(); x++) {
@@ -301,12 +349,11 @@ public class MyImage {
             
           }
         }
-         int intSum = (int) (sum);
+        int intSum = (int) (sum);
         
         bufferedImage.setRGB(x,y, new Pixel(intSum, intSum, intSum).getRGB());
       }
     }
-
   }
 
 }

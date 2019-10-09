@@ -94,8 +94,14 @@ public class Main {
           case "autoAdjustForExposure":
             image.autoAdjustForExposure();
             break;
-          case "kernel":
-            image.applyKernel();
+          case "kernel-blur":
+            image.applyKernelBlur();
+            break;
+          case "kernel-edge":
+            image.applyKernelEdge();
+            break;
+          case "kernel-sharp":
+            image.applyKernelSharp();
             break;
           case "none":
             break;
