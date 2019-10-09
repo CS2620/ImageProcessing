@@ -393,12 +393,12 @@ public class MyImage {
         float landX = x/4.0f;
         float landY = y/4.0f;
         
-        int lesserX = (int)landX;
+        /*int lesserX = (int)landX;
         int greaterX = lesserX + 1;
         int lesserY = (int)landY;
-        int greaterY = lesserY + 1;
+        int greaterY = lesserY + 1;*/
         
-        int[][] coordsX = new int[2][2];
+        /*int[][] coordsX = new int[2][2];
         int[][] coordsY = new int[2][2];
         
         coordsX[0][0] = lesserX; 
@@ -411,15 +411,16 @@ public class MyImage {
         coordsY[1][0] = greaterY;
         
         coordsX[1][1] = greaterX; 
-        coordsY[1][1] = greaterY;
+        coordsY[1][1] = greaterY;*/
         
         
         
-        int[][] color_ints = new int[2][2];
+       /* int[][] color_ints = new int[2][2];
         for(int y2= 0; y2 < 2; y2++){
           for(int x2 = 0; x2<2; x2++){
            int getX  = coordsX[y2][x2];
            int getY = coordsY[y2][x2];
+           
            if(getX >= bufferedImage.getWidth()){
              getX = bufferedImage.getWidth() - 1;
            }
@@ -428,20 +429,17 @@ public class MyImage {
            }
             color_ints[y2][x2] = bufferedImage.getRGB(getX, getY);            
           }
-        }
+        }*/
         
         //Now that I have my colors, calculate my final color.
         
-        Pixel color_top = Pixel.interpolate(color_ints[0][0], color_ints[0][1], landX - lesserX);
-        Pixel color_bottom = Pixel.interpolate(color_ints[1][0], color_ints[1][1], landX - lesserX);
-        
-        Pixel finalPixel = Pixel.interpolate(color_top, color_bottom, landY - lesserY);
         
         
         
         
         
-        temp.setRGB(x, y, finalPixel.getColor().getRGB());
+        
+        temp.setRGB(x, y, new Pixel(0,0,0).getColor().getRGB());
       }
     }
     
