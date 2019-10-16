@@ -473,8 +473,9 @@ public class MyImage {
         
         
         //Update here to implement method
-        int toGetX = x;
-        int toGetY = y;
+        int toGetX = x; //This dosen't change
+        int toGetY = newImage.getHeight() - 1 - y;
+          //System.out.println(toGetY);;
         
         
         
@@ -493,8 +494,8 @@ public class MyImage {
         
         
         //Update here to implement method
-        int toGetX = x;
-        int toGetY = y;
+        int toGetX = newImage.getWidth() - 1 - x;
+        int toGetY = y; // This doesn't change
         
         
         
@@ -507,14 +508,14 @@ public class MyImage {
   }
   
   void rotateClockwise() {
-    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage newImage = new BufferedImage(bufferedImage.getHeight(), bufferedImage.getWidth() , BufferedImage.TYPE_4BYTE_ABGR);
     for (int y = 0; y < newImage.getHeight(); y++) {
       for (int x = 0; x < newImage.getWidth(); x++) {
         
         
         //Update here to implement method
-        int toGetX = x;
-        int toGetY = y;
+        int toGetX = y;
+        int toGetY = bufferedImage.getHeight() - 1 - x;
         
         
         
@@ -527,14 +528,14 @@ public class MyImage {
   }
   
   void rotateCounterClockwise() {
-    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage newImage = new BufferedImage(bufferedImage.getHeight(), bufferedImage.getWidth() , BufferedImage.TYPE_4BYTE_ABGR);
     for (int y = 0; y < newImage.getHeight(); y++) {
       for (int x = 0; x < newImage.getWidth(); x++) {
         
         
         //Update here to implement method
-        int toGetX = x;
-        int toGetY = y;
+        int toGetX = bufferedImage.getWidth() - 1 - y;
+        int toGetY = x;
         
         
         
