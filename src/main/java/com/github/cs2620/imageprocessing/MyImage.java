@@ -466,4 +466,104 @@ public class MyImage {
 
   }
 
+  void flipHorizontal() {
+    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    for (int y = 0; y < newImage.getHeight(); y++) {
+      for (int x = 0; x < newImage.getWidth(); x++) {
+        
+        
+        //Update here to implement method
+        int toGetX = x;
+        int toGetY = y;
+        
+        
+        
+        int color = bufferedImage.getRGB(toGetX, toGetY);        
+        newImage.setRGB(x, y, color);              
+      }
+    }
+    
+    bufferedImage = newImage;
+  }
+  
+  void flipVertical() {
+    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    for (int y = 0; y < newImage.getHeight(); y++) {
+      for (int x = 0; x < newImage.getWidth(); x++) {
+        
+        
+        //Update here to implement method
+        int toGetX = x;
+        int toGetY = y;
+        
+        
+        
+        int color = bufferedImage.getRGB(toGetX, toGetY);        
+        newImage.setRGB(x, y, color);              
+      }
+    }
+    
+    bufferedImage = newImage;
+  }
+  
+  void rotateClockwise() {
+    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    for (int y = 0; y < newImage.getHeight(); y++) {
+      for (int x = 0; x < newImage.getWidth(); x++) {
+        
+        
+        //Update here to implement method
+        int toGetX = x;
+        int toGetY = y;
+        
+        
+        
+        int color = bufferedImage.getRGB(toGetX, toGetY);        
+        newImage.setRGB(x, y, color);              
+      }
+    }
+    
+    bufferedImage = newImage;
+  }
+  
+  void rotateCounterClockwise() {
+    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    for (int y = 0; y < newImage.getHeight(); y++) {
+      for (int x = 0; x < newImage.getWidth(); x++) {
+        
+        
+        //Update here to implement method
+        int toGetX = x;
+        int toGetY = y;
+        
+        
+        
+        int color = bufferedImage.getRGB(toGetX, toGetY);        
+        newImage.setRGB(x, y, color);              
+      }
+    }
+    
+    bufferedImage = newImage;
+  }
+  
+  void rotateArbitrary(float degrees) {
+    BufferedImage newImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight() , BufferedImage.TYPE_4BYTE_ABGR);
+    for (int y = 0; y < newImage.getHeight(); y++) {
+      for (int x = 0; x < newImage.getWidth(); x++) {
+        
+        
+        //Update here to implement method
+        int toGetX = x;
+        int toGetY = y;
+        
+        
+        
+        int color = bufferedImage.getRGB(toGetX, toGetY);        
+        newImage.setRGB(x, y, color);              
+      }
+    }
+    
+    bufferedImage = newImage;
+  }
+
 }

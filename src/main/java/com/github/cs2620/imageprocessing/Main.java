@@ -116,6 +116,22 @@ public class Main {
             image.crop();
             image.scaleBilinear();
             break;
+          case "flip_horizontal":
+            image.flipHorizontal();
+            break;
+          case "flip_vertical":
+            image.flipVertical();
+            break;
+          case "rotate_clockwise":
+            image.rotateClockwise();
+            break;
+          case "rotate_counter_clockwise":
+            image.rotateCounterClockwise();
+            break;
+          case "rotate_arbitrary":
+            float floatArg = Float.parseFloat(arg);  
+            image.rotateArbitrary(floatArg);
+            break;
           case "none":
             break;
           default:

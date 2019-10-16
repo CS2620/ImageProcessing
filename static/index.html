@@ -159,6 +159,41 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='FlipHorizontal'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/flip_horizontal'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='FlipVertical'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/flip_vertical'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='RotateClockwise'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/rotate_clockwise'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='RotateCounterClockwise'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/rotate_counter_clockwise'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='RotateArbitrary'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/rotate_arbitrary,45'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </v-col>
                 </v-row>
               </v-card>
@@ -201,19 +236,45 @@
             type: "bw",
             name: "BitSliceRebuild"
           },
-          {
+          /*{
             type:"color",
             name:"Crop",
             title:"Manual Adjust",
-          },
+          },*/
           {
             type:"color",
             name:"Crop&ScaleLinear",
+            title:"Manual Adjust"
             
           },
           {
             type:"color",
             name:"Crop&ScaleBilinear",
+            
+          },
+          {
+            type:"color",
+            name:"FlipHorizontal",
+            
+          },
+          {
+            type:"color",
+            name:"FlipVertical",
+            
+          },
+          {
+            type:"color",
+            name:"RotateClockwise",
+            
+          },
+          {
+            type:"color",
+            name:"RotateCounterClockwise",
+            
+          },
+          {
+            type:"color",
+            name:"RotateArbitrary",
             
           },
           {
