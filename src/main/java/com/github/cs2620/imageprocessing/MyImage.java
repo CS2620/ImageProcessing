@@ -557,9 +557,38 @@ public class MyImage {
         int toGetX = x;
         int toGetY = y;
         
+        //Move into rotation space
+        int xrs = x - newImage.getWidth()/2;
+        int yrs = y - newImage.getHeight()/2;
+        
+        //Get the length of the hypotenus
+        double hypotenus = Math.sqrt(xrs * xrs + yrs * yrs);
+        
+        //Calculate the angle
+        double currentAngle = Math.atan2(yrs, xrs);
+        
+        //Angle in pre-rotated image
+        double originalAngle = currentAngle - Math.PI/4.0;
+        
+        //Move back into Euclidean space
+        double xrs_orginal = Math.cos(originalAngle) * hypotenus;
+        double yrs_orginal = Math.sin(originalAngle) * hypotenus;
+        
+        //Move into screen/image space
+        double x_original = xrs_orginal + newImage.getWidth()/2;
+        double y_original = yrs_orginal + newImage.getHeight()/2;
+        
+        int color;
+        //Check to see if I'm in bounds
+        if(x_original < 0 || y_original < 0 || x_original >= newImage.getWidth() || y_original >= newImage.getHeight())
+        {
+            color = Color.PINK.getRGB();            
+        }
+        else{
+            color = bufferedImage.getRGB((int)x_original, (int)y_original);
+        }
         
         
-        int color = bufferedImage.getRGB(toGetX, toGetY);        
         newImage.setRGB(x, y, color);              
       }
     }
