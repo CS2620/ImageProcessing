@@ -128,6 +128,9 @@ public class Main {
           case "rotate_counter_clockwise":
             image.rotateCounterClockwise();
             break;
+          case "color_reduce":
+            image.colorReduce();
+            break;
           case "rotate_arbitrary":
             float floatArg = Float.parseFloat(arg);  
             image.rotateArbitrary(floatArg);

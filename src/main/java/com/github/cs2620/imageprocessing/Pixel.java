@@ -143,6 +143,12 @@ public class Pixel {
         
     }
     
+    public void setValue(Pixel other){
+      this.r = other.r;
+      this.g = other.g;
+      this.b = other.b;
+    }
+    
     public void moreSaturated(){
         
         float[] hsb = new float[3];
@@ -226,6 +232,10 @@ public class Pixel {
         int toReturn = ((0xff) << 24) + (r << 16) + (g << 8) + b;
         
         return toReturn;
+    }
+    
+    public float distanceL1(Pixel other){
+      return Math.abs(this.r - other.r) + Math.abs(this.g - other.g) + Math.abs(this.b - other.b);
     }
 
 }

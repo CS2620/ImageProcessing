@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -594,6 +595,22 @@ public class MyImage {
     }
     
     bufferedImage = newImage;
+  }
+
+  void colorReduce() {
+    reduceToColors(new Pixel[]{
+      new Pixel(0,0,0), 
+      new Pixel(255, 255, 255), 
+      //new Pixel(255, 0, 0), 
+      //new Pixel(0, 255, 0), 
+      //new Pixel(0, 0, 255)
+    });
+    
+  }
+  
+  void reduceToColors(Pixel[] colors){
+    //all(p->p.setValue(Arrays.stream(colors).reduce((a,b)->p.distanceL1(a) < p.distanceL1(b) ? a:b).get()));
+    all(p->p.setValue(new Pixel(0,0,0)));
   }
 
 }

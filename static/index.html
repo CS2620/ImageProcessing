@@ -176,6 +176,13 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='ColorReduce'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/color_reduce'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                     <div v-if="process.name=='RotateCounterClockwise'">
                       <v-row>
                         <v-col>
@@ -281,6 +288,10 @@
           {
             type: "bw",
             name: "Kernel-Blur",
+          },
+          {
+            type: "color",
+            name: "ColorReduce",
           },
           {
             type: "bw",
