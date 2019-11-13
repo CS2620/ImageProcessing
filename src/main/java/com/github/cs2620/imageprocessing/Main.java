@@ -131,6 +131,15 @@ public class Main {
           case "color_reduce":
             image.colorReduce();
             break;
+          case "dither_bw":
+            image.ditherBW();
+            break;
+          case "dither_color":
+            image.ditherColor();
+            break;
+          case "threshold":
+            image.threshold();
+            break;
           case "rotate_arbitrary":
             float floatArg = Float.parseFloat(arg);  
             image.rotateArbitrary(floatArg);

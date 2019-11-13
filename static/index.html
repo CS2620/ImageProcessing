@@ -183,6 +183,27 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='DitherBW'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/dither_bw'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='DitherColor'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/dither_color'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='Threshold'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/threshold'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                     <div v-if="process.name=='RotateCounterClockwise'">
                       <v-row>
                         <v-col>
@@ -292,6 +313,18 @@
           {
             type: "color",
             name: "ColorReduce",
+          },
+          {
+            type: "bw",
+            name: "DitherBW",
+          },
+          {
+            type: "color",
+            name: "DitherColor",
+          },
+          {
+            type: "bw",
+            name: "Threshold",
           },
           {
             type: "bw",
