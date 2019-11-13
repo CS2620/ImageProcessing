@@ -672,14 +672,7 @@ public class MyImage {
         int color = bufferedImage.getRGB(x, y);
         Pixel p = new Pixel(color);
         p.toGrayscale();
-        int bw = p.getGrayscale();
-        if (bw + error < 128) {
-          p.setGrayscaleValue(0);
-          error += bw - 0;
-        } else {
-          p.setGrayscaleValue(255);
-          error += bw - 255;
-        }
+        
 
         newImage.setRGB(x, y, p.getRGB());
       }
@@ -711,20 +704,10 @@ public class MyImage {
         int color = bufferedImage.getRGB(x, y);
         Pixel p = new Pixel(color);
         
-        int pR = p.getRed();
-        int pG = p.getGreen();
-        int pB = p.getBlue();
         
-        Pixel adjusted = new Pixel(p.getRed() + errorR, p.getGreen()+ errorG, p.getBlue() + errorB, false);
-        
-        Pixel closestColor = Arrays.stream(myColors).reduce((a,b)->a.distanceL1(adjusted)<b.distanceL1(adjusted)?a:b).get();
-        
-        errorR = adjusted.getRed() - closestColor.getRed();
-        errorG = adjusted.getGreen() - closestColor.getGreen();
-        errorB = adjusted.getBlue() - closestColor.getBlue();
         
 
-        newImage.setRGB(x, y, closestColor.getRGB());
+        newImage.setRGB(x, y, p.getRGB());
       }
     }
 
@@ -739,12 +722,7 @@ public class MyImage {
         int color = bufferedImage.getRGB(x, y);
         Pixel p = new Pixel(color);
         p.toGrayscale();
-        int bw = p.getRed();
-        if (bw < 128) {
-          p.setGrayscaleValue(0);
-        } else {
-          p.setGrayscaleValue(255);
-        }
+        
 
         newImage.setRGB(x, y, p.getRGB());
       }
