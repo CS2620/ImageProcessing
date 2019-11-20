@@ -89,6 +89,29 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='YUVChannels'">
+                      <v-row>
+                        <v-col cols="6">
+                          <div>Y Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/to_yuv_y'">
+                          </div>
+                        </v-col>
+                        <v-col cols="6">
+                          <div>U Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/to_yuv_u'">
+                          </div>
+                        </v-col>
+
+                        <v-col cols="6">
+                          <div>V Channel</div>
+                          <div>
+                            <v-img :src="'./img/' + src + '/to_yuv_v'">
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
                     <div v-if="process.name=='AutoContrast'">
                       <div>
                         <v-img :src="'./img/' + src + '/autoAdjustForExposure'"></v-img>
@@ -218,6 +241,48 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='BasicGreenScreen'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/basic_green_screen'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='SetBasicGreenScreenMask'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/basic_green_screen_mask'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='AdvancedGreenScreen'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/advanced_green_screen'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='SetAdvancedGreenScreenMask'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/advanced_green_screen_mask'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='YUVGreenScreen'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/yuv_green_screen'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='SetuYUVGreenScreenMask'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/yuv_green_screen_mask'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </v-col>
                 </v-row>
               </v-card>
@@ -253,6 +318,10 @@
             type: "color",
             name: "RGBChannels",
             title: "Image Decomposition",
+          },
+          {
+            type: "color",
+            name: "YUVChannels",
           },
           {
             type: "bw",
@@ -331,6 +400,34 @@
             name: "Kernel-Edge",
             title: "Image Understanding"
           },
+          {
+            type: "color",
+            name:"SetBasicGreenScreenMask",
+            title:"BackgroundRemoval"
+          },
+          {
+            type: "color",
+            name:"BasicGreenScreen",
+            
+          },
+          {
+            type: "color",
+            name:"SetAdvancedGreenScreenMask",
+          },
+          {
+            type: "color",
+            name:"AdvancedGreenScreen",
+            
+          },
+          {
+            type: "color",
+            name:"SeYUVGreenScreenMask",
+          },
+          {
+            type: "color",
+            name:"YUVGreenScreen",
+            
+          }
 
 
         ],

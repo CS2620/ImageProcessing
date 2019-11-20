@@ -27,6 +27,14 @@ public class Pixel {
 
     return new Pixel(r, g, b);
   }
+  
+  static Pixel fromYUV(float y, float u, float v){
+    float r = y + 0 * u +  1.13983f * v;
+    float g = y - .39465f * u + -.58060f * v;
+    float b = y + 2.03211f*u + 0 * v;
+    
+    return new Pixel((int)(r * 255.0f), (int)(g * 255.0f), (int)(b*255.0f));
+  }
 
   protected int r, g, b;
 
@@ -251,6 +259,28 @@ public class Pixel {
 
   public int getGrayscale() {
     return (r + g + b) / 3;
+  }
+
+  boolean isChroma(int chromaR, int chromaG, int chromaB, int tolerance) {
+    return Math.abs(chromaR - this.r) <= tolerance && 
+           Math.abs(chromaG - this.g) <= tolerance &&
+           Math.abs(chromaB - this.b) <= tolerance;
+  }
+
+  boolean isWhite() {
+    return this.r == 255 && this.g == 255 && this.b == 255;
+  }
+  
+  float getYUV_Y(){
+    return .299f * r/255.0f + .587f * g/255.0f + .114f * b/255.0f;
+  }
+  
+  float getYUV_U(){
+    return -.14713f * r/255.0f + -.28886f * g/255.0f + .436f * b/255.0f;
+  }
+  
+  float getYUV_V(){
+    return .615f * r/255.0f + -.51499f * g/255.0f + -.10001f * b/255.0f;
   }
 
 }

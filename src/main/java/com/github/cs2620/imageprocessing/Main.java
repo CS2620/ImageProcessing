@@ -140,6 +140,33 @@ public class Main {
           case "threshold":
             image.threshold();
             break;
+          case "basic_green_screen":
+            image.basicGreenScreen();
+            break;
+          case "basic_green_screen_mask":
+            image.setBasicGreenScreenMask();
+            break;
+          case "advanced_green_screen":
+            image.advancedGreenScreen();
+            break;
+          case "advanced_green_screen_mask":
+            image.setAdvancedGreenScreenMask();
+            break;
+          case "yuv_green_screen":
+            image.YUVGreenScreen();
+            break;
+          case "yuv_green_screen_mask":
+            image.setYUVGreenScreenMask();
+            break;
+          case "to_yuv_v":
+            image.toYUV_V();
+            break;
+          case "to_yuv_y":
+            image.toYUV_Y();
+            break;
+          case "to_yuv_u":
+            image.toYUV_U();
+            break;
           case "rotate_arbitrary":
             float floatArg = Float.parseFloat(arg);  
             image.rotateArbitrary(floatArg);
