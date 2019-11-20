@@ -826,12 +826,7 @@ public class MyImage {
       for (int x = 0; x < mask.getWidth(); x++) {
         int color = bufferedImage.getRGB(x, y);
         Pixel p = new Pixel(color);
-        int maskColor = mask.getRGB(x, y);
-        Pixel maskP = new Pixel(maskColor);
-        float alpha = p.getGreen() / 255.0f - 1;
-
-        int intAlpha = (int) (255 * alpha);
-        mask.setRGB(x, y, new Pixel(intAlpha, intAlpha, intAlpha).getRGB());
+        
       }
 
     }
@@ -845,14 +840,7 @@ public class MyImage {
 
     for (int y = 0; y < mask.getHeight(); y++) {
       for (int x = 0; x < mask.getWidth(); x++) {
-        int color = bufferedImage.getRGB(x, y);
-        Pixel p = new Pixel(color);
-        int maskColor = mask.getRGB(x, y);
-        Pixel maskP = new Pixel(maskColor);
-        float alpha = p.getGreen() / 255.0f - 1;
-
-        int intAlpha = (int) (255 * alpha);
-        mask.setRGB(x, y, new Pixel(intAlpha, intAlpha, intAlpha).getRGB());
+        
       }
 
     }
@@ -868,17 +856,7 @@ public class MyImage {
     for (int y = 0; y < mask.getHeight(); y++) {
       for (int x = 0; x < mask.getWidth(); x++) {
 
-        int color = bufferedImage.getRGB(x, y);
-        Pixel p = new Pixel(color);
-        float alpha = new Pixel(mask.getRGB(x, y)).getRed() / 255.0f;
-
-        int colorRed = p.getRed();
-        int colorGreen = p.getGreen();
-        int colorBlue = p.getBlue();
-
-        float foregroundRed = (colorRed ) / alpha;
-        float foregroundBlue = (colorBlue) / alpha;
-        newImage.setRGB(x, y, new Pixel((int) foregroundRed, 0, (int) foregroundBlue).getRGB());
+       
 
       }
 
@@ -894,15 +872,7 @@ public class MyImage {
 
         int color = bufferedImage.getRGB(x, y);
         Pixel p = new Pixel(color);
-        float alpha = new Pixel(mask.getRGB(x, y)).getRed() / 255.0f;
-
-        int colorRed = p.getRed();
-        int colorGreen = p.getGreen();
-        int colorBlue = p.getBlue();
-
-        float foregroundRed = (colorRed ) / alpha;
-        float foregroundBlue = (colorBlue) / alpha;
-        newImage.setRGB(x, y, new Pixel((int) foregroundRed, 0, (int) foregroundBlue).getRGB());
+       
 
       }
 
