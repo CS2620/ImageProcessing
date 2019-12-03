@@ -283,6 +283,13 @@
                         </v-col>
                       </v-row>
                     </div>
+                    <div v-if="process.name=='snakes'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/snakes'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </v-col>
                 </v-row>
               </v-card>
@@ -427,6 +434,11 @@
             type: "color",
             name:"YUVGreenScreen",
             
+          },
+          {
+            type: "bw",
+            name:"snakes",
+            title:"Segmentation"            
           }
 
 

@@ -6,6 +6,9 @@
 package com.github.cs2620.imageprocessing;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -940,6 +943,26 @@ public class MyImage {
 
   void setYUVGreenScreenMask() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  void snakes() {
+    Point2D[] points = {new Point2D.Float(50, 50), new Point.Float(50, 100), new Point.Float(50, 150)};
+    
+    Graphics2D g = (Graphics2D)bufferedImage.getGraphics();
+    
+    for(int p = 0; p < points.length; p++){
+      Point2D point = points[p];
+      g.setColor(Color.RED);
+      g.fillRect((int)(point.getX()-5), (int)(point.getY()-5), 10, 10);
+      if(p != points.length -1){
+        g.drawLine((int)point.getX(), (int)point.getY(), (int)points[p+1].getX(), (int)points[p+1].getY());
+      }
+    }
+    
+    g.dispose();
+    
+    
+    
   }
 
 }
