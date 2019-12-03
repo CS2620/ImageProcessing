@@ -171,8 +171,8 @@ public class Main {
             float floatArg = Float.parseFloat(arg);  
             image.rotateArbitrary(floatArg);
             break;
-          case "snakes":
-            image.snakes();
+          case "compress":
+            image.compress();
             break;
           case "none":
             break;

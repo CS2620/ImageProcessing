@@ -290,6 +290,20 @@ public class MyImage {
     doKernel(kernel);
 
   }
+  
+  void applyKernelGaussian() {
+    float[][] kernel = new float[3][3];
+
+    for (int y = 0; y < 3; y++) {
+      for (int x = 0; x < 3; x++) {
+        kernel[y][x] = 1 / 9.0f;
+
+      }
+    }
+
+    doKernel(kernel);
+
+  }
 
   void applyKernelSharp() {
     float[][] kernel = new float[3][3];
@@ -944,23 +958,61 @@ public class MyImage {
   void setYUVGreenScreenMask() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
+  
+  
 
-  void snakes() {
-    Point2D[] points = {new Point2D.Float(50, 50), new Point.Float(50, 100), new Point.Float(50, 150)};
+  void compress() {
     
-    Graphics2D g = (Graphics2D)bufferedImage.getGraphics();
+    byte[] trivialGrayscaleStream = this.trivialCompress();
     
-    for(int p = 0; p < points.length; p++){
-      Point2D point = points[p];
-      g.setColor(Color.RED);
-      g.fillRect((int)(point.getX()-5), (int)(point.getY()-5), 10, 10);
-      if(p != points.length -1){
-        g.drawLine((int)point.getX(), (int)point.getY(), (int)points[p+1].getX(), (int)points[p+1].getY());
-      }
+    BufferedImage newImage = this.trivialDecompress(trivialGrayscaleStream);
+    
+    //int differenceSum = bufferedImage.difference(newImage);
+    
+    bufferedImage = newImage;
+    
+    
+    
+    
+    
+  }
+
+  private byte[] trivialCompress() {
+    int width = bufferedImage.getWidth();
+    int height = bufferedImage.getHeight();
+    
+    //Get the width and height as a string
+    String widthHeight = "" + width + " " + height + " ";
+    byte[] header = widthHeight.getBytes();
+    
+    
+    
+    byte[] toReturn = new byte[width * height + header.length];
+    
+    for(int h = 0; h < header.length; h++){
+      toReturn[h] = header[h];
     }
     
-    g.dispose();
+    for (int y = 0; y < bufferedImage.getHeight(); y++) {
+      for (int x = 0; x < bufferedImage.getWidth(); x++) {
+
+        int color = bufferedImage.getRGB(x, y);
+        Pixel p = new Pixel(color);
+       
+        int i = p.getGrayscale();
+        byte b = (byte)i;
+        toReturn[y * width + x + header.length] = b;
+
+      }
+
+    }
+    return toReturn;
     
+  }
+
+  private BufferedImage trivialDecompress(byte[] trivialGrayscaleStream) {
+    
+    //scan for the width and height
     
     
   }
