@@ -283,10 +283,24 @@
                         </v-col>
                       </v-row>
                     </div>
-                    <div v-if="process.name=='compression'">
+                    <div v-if="process.name=='compressPGM'">
                       <v-row>
                         <v-col>
-                          <v-img :src="'./img/' + src + '/compress'"></v-img>
+                          <v-img :src="'./img/' + src + '/compressPGM'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='compressGray'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/compressGray'"></v-img>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div v-if="process.name=='compressCustom'">
+                      <v-row>
+                        <v-col>
+                          <v-img :src="'./img/' + src + '/compressCustom'"></v-img>
                         </v-col>
                       </v-row>
                     </div>
@@ -437,8 +451,16 @@
           },
           {
             type: "bw",
-            name:"compression",
+            name:"compressPGM",
             title:"Compression"            
+          },
+          {
+            type: "bw",
+            name:"compressGray"         
+          },
+          {
+            type: "bw",
+            name:"compressCustom"         
           }
 
 

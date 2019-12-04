@@ -171,8 +171,14 @@ public class Main {
             float floatArg = Float.parseFloat(arg);  
             image.rotateArbitrary(floatArg);
             break;
-          case "compress":
-            image.compress();
+          case "compressPGM":
+            image.compressPGM();
+            break;
+          case "compressGray":
+            image.compressGray();
+            break;
+          case "compressCustom":
+            image.compressCustom();
             break;
           case "none":
             break;
