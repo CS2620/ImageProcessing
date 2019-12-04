@@ -51,7 +51,7 @@ public class Main {
 
       String path = optionalPath.get();
 
-      MyImage image = new MyImage("./images/" + path);
+      MyImage image = new CompressionImage("./images/" + path);
 
       String[] mods = mod.split(":");
       for (int i = 0; i < mods.length; i++) {
@@ -172,13 +172,13 @@ public class Main {
             image.rotateArbitrary(floatArg);
             break;
           case "compressPGM":
-            image.compressPGM();
+            ((CompressionImage)image).compressPGM();
             break;
           case "compressGray":
-            image.compressGray();
+            ((CompressionImage)image).compressGray();
             break;
           case "compressCustom":
-            image.compressCustom();
+            ((CompressionImage)image).compressCustom();
             break;
           case "none":
             break;
