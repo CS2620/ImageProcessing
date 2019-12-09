@@ -13,8 +13,10 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.stream.Stream;
 import kotlin.Pair;
 
 /**
@@ -265,6 +267,7 @@ public class CompressionImage extends MyImage {
     int height = bufferedImage.getHeight();
 
     StringBuilder sb = new StringBuilder();
+    byte[] imageBytes = new byte[width * height];
 
     sb.append("Cu\n"); //Custom magic Number
     sb.append("" + width + " " + height + "\n"); //The size of the image
@@ -276,16 +279,22 @@ public class CompressionImage extends MyImage {
         Pixel p = new Pixel(color);
 
         int i = p.getGrayscale();
-        sb.append(i);
-        if (x != bufferedImage.getWidth() - 1) {
-          sb.append(" ");
-        } else {
-          sb.append("\n");
-        }
+        
+        byte toSave = (byte)i;
+        imageBytes[y * width + x] = toSave;
       }
     }
     String string = sb.toString();
-    byte[] toReturn = string.getBytes();
+    byte[] headerBytes = sb.toString().getBytes();
+    
+    byte[] toReturn = new byte[headerBytes.length + imageBytes.length];
+    for(int i = 0; i < headerBytes.length; i++){
+      toReturn[i] = headerBytes[i];
+    }
+    for(int i = 0; i < imageBytes.length; i++){
+      toReturn[i + headerBytes.length] = imageBytes[i];
+    }
+    
     String strDate = "";
 
     strDate = saveBytesAsFile(strDate, toReturn);
@@ -316,32 +325,35 @@ public class CompressionImage extends MyImage {
     int height = Integer.parseInt(WidthHeightSplit[1]);
     BufferedImage toReturn = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
     index++;
+    
+    //We need to find this same place in the byte string
+    index = 0; 
+    int countNewLine = 0;
+    for(int i = 0; i < pgm.length && countNewLine < 2; i++){
+      
+      byte b = pgm[i];
+      if(b == 0x0A)//Hex for 11 or \n
+      {
+        countNewLine++;
+      }
+      index++;
+    }
+    System.out.println(index);
 
     
 
     //Now we are actually going to parse the file itself
     for (int y = 0; y < height; y++) {
 
-      if (index >= lines.length) {
-        System.out.println("There are not enough lines in the file to match the declared height of the image.");
-        return null;
-      }
-
-      String rowString = lines[index];
-      String[] valueStrings = rowString.split(" ");
-
-      if (valueStrings.length != width) {
-        System.out.println("Mismatch if the length of the row in the file and in the declared width of the image.");
-        return null;
-      }
-
       for (int x = 0; x < width; x++) {
-        int value = Integer.parseInt(valueStrings[x]);
-        Pixel pixel = new Pixel(value, value, value);
+        
+        byte value= pgm[index+y * width + x];
+        int positiveValue = Byte.toUnsignedInt(value);
+        Pixel pixel = new Pixel(positiveValue, positiveValue, positiveValue);
         toReturn.setRGB(x, y, pixel.getRGB());
 
       }
-      index++;
+      
     }
 
     return toReturn;
